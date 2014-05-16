@@ -7,11 +7,7 @@ class User < ActiveRecord::Base
   attr_accessor :signin
   validates :username, :uniqueness => {:case_sensitive => false}
 
-  def self.find_first_by_auth_conditions(warden_conditions)
-	  conditions = warden_conditions.dup
-	  where(conditions).where(["lower(username) = :value OR lower(email)
-   = :value", { :value => signin.downcase }]).first
-  end
+
 
 
 end
