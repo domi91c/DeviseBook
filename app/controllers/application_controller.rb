@@ -10,5 +10,22 @@ class ApplicationController < ActionController::Base
 	  devise_parameter_sanitizer.for(:sign_up) {|u| u.permit(:email,
 	                                                         :username, :password, :password_confirmation)}
   end
+  layout :layout_by_resource
 
+  protected
+  def layout_by_resource
+	  if devise_controller?
+		  if resource_name == :admin
+			  "devise_admin_application" #admin model will use this layout
+		  elsif resource_name == :employee
+			  "devise_employee_application" #employee model will use this
+
+		  else
+			  "devise_application" #other devise model will use this
+
+		  end
+	  else
+		  "application" #default rails application layout
+	  end
+  end
 end
